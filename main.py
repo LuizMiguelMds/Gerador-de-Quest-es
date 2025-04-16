@@ -18,21 +18,23 @@ app.add_middleware(
 df = pd.read_excel("Banco de Questões - Geografia.xlsx")
 
 #tratamento para remover linhas vazias e incompletas
-df = df[df["Enuciado"].notna() & df["Resposta correta"].notna()]
+df = df[df["Enunciado"].notna() & df["Resposta correta"].notna()]
+
+print(df.columns.tolist())
 
 @app.get("/questao")
 def get_questao():
     questao = df.sample(1).iloc[0]  # Pega uma questão aleatória
     return {
         "id": questao["ID Questão"],
-        "enuciado": questao["Enuciado"],
+        "enuciado": questao["Enunciado"],
         "alternativas": {
-            "A": questao["A"],
-            "B": questao["B"],
-            "C": questao["C"],
-            "D": questao["D"],
-            "E": questao["E"]
+            "A": questao["Alternativa A"],
+            "B": questao["Alternativa B"],
+            "C": questao["Alternativa C"],
+            "D": questao["Alternativa D"],
+            "E": questao["Alternativa E"]
         },
         "resposta_correta": questao["Resposta correta"],
-        "resposta_texto": questao["Texto da resposta correta"]
+        "resposta_texto": questao["Texto Alternativa correta"]
     }
