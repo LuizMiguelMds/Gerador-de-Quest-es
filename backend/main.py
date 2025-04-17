@@ -20,6 +20,8 @@ df = pd.read_excel("Banco de Questões - Geografia.xlsx")
 #tratamento para remover linhas vazias e incompletas
 df = df[df["Enunciado"].notna() & df["Resposta correta"].notna()]
 
+df = df.where(pd.notnull(df), None)
+
 print(df.columns.tolist())
 
 @app.get("/questao")
